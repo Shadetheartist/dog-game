@@ -1,20 +1,15 @@
 #include <Arduino.h>
+#include "game/game.h"
 
-#include "display.h"
-
-Display d = Display();
+Game game;
 
 void setup(void)
 {
-    Serial.begin(115200);
-    d.init();
+	Serial.begin(115200);
+	game.init();
 }
-float r = 0;
+
 void loop()
 {
-    r += 0.01f;
-    float dc = fabs(sin(r));
-    Serial.println(dc);
-    d.backlightDutyCycle = dc;
-    delay(10);
+	game.run();
 }

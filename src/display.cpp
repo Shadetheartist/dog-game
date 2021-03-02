@@ -1,36 +1,44 @@
 #include "display.h"
 #include "graphics.h"
 
-#define SCREEN_WIDTH 240
-#define SCREEN_HEIGHT 135
+#define SCREEN_HEIGHT 240
+#define SCREEN_WIDTH 135
 
-Display::Display(){
-    tft = new TFT_eSPI(SCREEN_WIDTH, SCREEN_HEIGHT);
-    backlightDutyCycle = 0.1f;
+Display::Display()
+{
+	tft = new TFT_eSPI(SCREEN_WIDTH, SCREEN_HEIGHT);
+	backlightDutyCycle = 0.1f;
 }
 
-void Display::init(){
-    tft->init();
-    tft->setRotation(3);
-    tft->setSwapBytes(true);
-    xTaskCreatePinnedToCore(this->backlightRunner, "backlightRunner", 1000, this, 0, &this->backlightTaskHandle, 0);
+Display::~Display()
+{
+	delete tft;
 }
 
+void Display::init()
+{
+	tft->init();
+	tft->setRotation(3);
+	tft->setSwapBytes(true);
+	tft->fillScreen(0x0);
 
-void Display::displayFrame(){
-    tft->pushImage(0,0,240,135, GRAPHICS_SPLASH_IMG);
+	xTaskCreatePinnedToCore(this->backlightRunner, "backlightRunner", 1000, this, 0, &this->backlightTaskHandle, 0);
 }
 
-void Display::backlightRunner(void* display){
-    Display* d = static_cast<Display*>(display);
-    const short base = 10000;
-    for(;;){
-        short high = base * d->backlightDutyCycle;
-        short low = base - high;
+void Display::backlightRunner(void *display)
+{
+	Display *d = static_cast<Display *>(display);
 
-        digitalWrite(4, LOW);
-        delayMicroseconds(low);
-        digitalWrite(4, HIGH);
-        delayMicroseconds(high);
-    }
+	//the base determines the actual slice of time that the delay is off and on.
+	const long base = 7500;
+	for (;;)
+	{
+		long high = base * d->backlightDutyCycle;
+		long low = base - high;
+
+		digitalWrite(4, LOW);
+		delayMicroseconds(low);
+		digitalWrite(4, HIGH);
+		delayMicroseconds(high);
+	}
 }
