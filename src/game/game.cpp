@@ -8,11 +8,14 @@ Game::Game()
 
 Game::~Game()
 {
+	Serial.println("destructing Game");
 	delete display;
 }
 
 void Game::init()
 {
+	Serial.println("init Game");
+
 	display->init();
 	state = Running;
 	changeStage(SplashScreen);
