@@ -1,13 +1,10 @@
 #include "display.h"
 #include "graphics.h"
 
-#define SCREEN_HEIGHT 240
-#define SCREEN_WIDTH 135
-
 Display::Display()
 {
-	tft = new TFT_eSPI(SCREEN_WIDTH, SCREEN_HEIGHT);
-	backlightDutyCycle = 0.1f;
+	tft = new TFT_eSPI(SCREEN_HEIGHT, SCREEN_WIDTH);
+	backlightDutyCycle = 0;
 }
 
 Display::~Display()
@@ -22,7 +19,7 @@ void Display::init()
 	tft->setSwapBytes(true);
 	tft->fillScreen(0x0);
 
-	xTaskCreatePinnedToCore(this->backlightRunner, "backlightRunner", 1000, this, 0, &this->backlightTaskHandle, 0);
+	//xTaskCreatePinnedToCore(this->backlightRunner, "backlightRunner", 1000, this, 0, &this->backlightTaskHandle, 0);
 }
 
 void Display::backlightRunner(void *display)
