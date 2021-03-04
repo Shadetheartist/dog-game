@@ -20,28 +20,17 @@ void SplashStageRunner::begin()
 	Serial.println("beginning splash stage runner");
 	fadeIn = 0;
 	game->display->backlightDutyCycle = fadeIn;
-	//game->display->tft->pushImage(0, 0, GRAPHIC_SPLASH_IMG.width, GRAPHIC_SPLASH_IMG.height, GRAPHIC_SPLASH_IMG.data);
-	game->display->tft->fillScreen(0xddd);
-	game->display->tft->fillRect(SCREEN_WIDTH-50, SCREEN_HEIGHT-20,50,20, 0x111);
-	
-	game->display->tft->setCursor(1, 1, 4);
-	game->display->tft->setTextColor(TFT_WHITE, TFT_BLACK);
-
-	
-	Serial.print("free heap");
-	Serial.println(ESP.getFreeHeap());
-	
-	//this print seems to be causing an exception loop on occasion.
-	game->display->tft->print("Play");
-
+	game->display->tft->pushImage(0, 0, GRAPHIC_SPLASH_IMG.width, GRAPHIC_SPLASH_IMG.height, GRAPHIC_SPLASH_IMG.data);
 }
 
 void SplashStageRunner::run()
 {
-	Serial.println("running splash stage runner");
 	fadeIn += 0.005;
 	game->display->backlightDutyCycle = min(0.5f, fadeIn);
 	delay(32);
+	if(fadeIn > 0.5){
+		game->changeStage(MainMenu);
+	}
 }
 
 void SplashStageRunner::end()

@@ -6,9 +6,9 @@ static TFT_eSprite *sprite;
 MainMenuStageRunner::MainMenuStageRunner(Game* game) : StageRunner(game)
 {
 	menu = new Menu();
-	menu->menuItems.push_back(std::pair<char*, MenuCb>("Test Doggo Gen", NULL));
-	menu->menuItems.push_back(std::pair<char*, MenuCb>("Menu Item 2", NULL));
-	menu->menuItems.push_back(std::pair<char*, MenuCb>("Menu Item 3", NULL));
+	menu->menuItems.push_back(std::pair<std::string, MenuCb>("Test Doggo Gen", NULL));
+	menu->menuItems.push_back(std::pair<std::string, MenuCb>("Menu Item 2", NULL));
+	menu->menuItems.push_back(std::pair<std::string, MenuCb>("Menu Item 3", NULL));
 }
 
 MainMenuStageRunner::~MainMenuStageRunner() 
@@ -30,7 +30,6 @@ void MainMenuStageRunner::begin()
 
 void MainMenuStageRunner::run()
 {
-	Serial.println("running main menu stage runner");
 	delay(100);
 
 	menu->nextItem();

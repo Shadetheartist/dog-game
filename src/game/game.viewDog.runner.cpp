@@ -22,19 +22,21 @@ void ViewDogStageRunner::begin()
 	}
 
 	Serial.println("beginning view dog stage runner");
+	Serial.print("viewing dog: ");
+	Serial.println(arg->dog->name.c_str());
 
 	game->display->tft->fillScreen(TFT_LIGHTGREY);
 	sprite = new TFT_eSprite(game->display->tft);
 	sprite->createSprite(64, 64);
+
+	arg->dog->renderToSprite(sprite);
+	sprite->pushSprite(SCREEN_WIDTH/2-60, SCREEN_HEIGHT/2-40);
+
 }
 
 void ViewDogStageRunner::run()
 {
-	arg->dog->renderToSprite(sprite);
-	sprite->pushSprite(SCREEN_WIDTH/2-60, SCREEN_HEIGHT/2-40);
-
 	delay(100);
-
 	yield();
 }
 

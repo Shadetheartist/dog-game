@@ -10,12 +10,15 @@ enum GameState
 
 enum GameStage
 {
+	None,
 	SplashScreen,
 	MainMenu,
-	Doghouse
+	Doghouse,
+	ViewDog,
 };
 
 class StageRunner;
+class StageRunnerArg;
 
 class Game
 {
@@ -23,13 +26,19 @@ public:
 	GameState state;
 	GameStage stage;
 	Display *display;
-	StageRunner *stageRunner;
 
+	StageRunner *stageRunner;
+	StageRunnerArg *stageRunnerArg;
+
+	GameStage previousStage;
+	StageRunnerArg *previousStageRunnerArg;
+	
 	Game();
 	~Game();
 	void init();
 	void run();
-	void changeStage(GameStage newStage);
+	void changeStage(GameStage newStage, StageRunnerArg *arg = NULL);
+	void returnToPreviousStage();
 };
 
 #endif /* INCLUDE_GAME_GAME */

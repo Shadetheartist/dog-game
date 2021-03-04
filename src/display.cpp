@@ -1,19 +1,22 @@
 #include "display.h"
 #include "graphics.h"
 
+TFT_eSPI _tft = TFT_eSPI();
+
 Display::Display()
 {
-	tft = new TFT_eSPI(SCREEN_HEIGHT, SCREEN_WIDTH);
 	backlightDutyCycle = 0;
+	this->tft = &_tft;
 }
 
 Display::~Display()
 {
-	delete tft;
+	
 }
 
 void Display::init()
 {
+	Serial.println("init display");
 	tft->init();
 	tft->setRotation(3);
 	tft->setSwapBytes(true);
@@ -27,15 +30,16 @@ void Display::backlightRunner(void *display)
 	Display *d = static_cast<Display *>(display);
 
 	//the base determines the actual slice of time that the delay is off and on.
-	const long base = 7500;
+	const long base = 7;
 	for (;;)
 	{
 		long high = base * d->backlightDutyCycle;
 		long low = base - high;
 
 		digitalWrite(4, LOW);
-		delayMicroseconds(low);
+		delay(low);
 		digitalWrite(4, HIGH);
-		delayMicroseconds(high);
+		delay(high);
+		yield();
 	}
 }

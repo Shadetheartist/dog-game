@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "game/game.h"
 
+
 Game game;
 
 void setup(void)
@@ -12,4 +13,5 @@ void setup(void)
 void loop()
 {
 	game.run();
+	yield();
 }

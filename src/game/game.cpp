@@ -1,5 +1,6 @@
 #include "game/game.h"
 #include "game/stageRunner.h"
+#include "dog/dog.h"
 
 Game::Game()
 {
@@ -18,7 +19,12 @@ void Game::init()
 
 	display->init();
 	state = Running;
-	changeStage(SplashScreen);
+	previousStage = None;
+
+	ViewDogStageRunnerArg *arg = new ViewDogStageRunnerArg();
+	arg->dog = Dog::createDog();
+
+	changeStage(ViewDog, arg);
 }
 
 void Game::run()
@@ -34,15 +40,19 @@ void Game::run()
 	}
 }
 
-void Game::changeStage(GameStage newStage) 
+void Game::changeStage(GameStage newStage, StageRunnerArg *arg) 
 {
-	stage = newStage;
-
 	//this may be null on first use
 	if(stageRunner != NULL){
 		stageRunner->end();
-		delete stageRunner;
+
+		delete previousStageRunnerArg;
+
+		previousStage = stage;
+		previousStageRunnerArg = stageRunnerArg;
 	}
+
+	stage = newStage;
 
 	switch (stage)
 	{
@@ -53,6 +63,10 @@ void Game::changeStage(GameStage newStage)
 		case GameStage::MainMenu:
 			stageRunner = new MainMenuStageRunner(this);
 			break;
+
+		case GameStage::ViewDog:
+			stageRunner = new ViewDogStageRunner(this, (ViewDogStageRunnerArg*)arg);
+			break;
 	
 		default:
 			//backup to stop errors while developing
@@ -60,5 +74,17 @@ void Game::changeStage(GameStage newStage)
 			break;
 	}
 
+	stageRunnerArg = arg;
+
 	stageRunner->begin();
+}
+
+void Game::returnToPreviousStage() 
+{
+	if(previousStage == None){
+		changeStage(SplashScreen);
+	}
+	else{
+		changeStage(previousStage, previousStageRunnerArg);
+	}
 }

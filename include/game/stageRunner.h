@@ -2,6 +2,14 @@
 #define __STAGERUNNER_H__
 
 #include "game.h"
+#include "menu.h"
+#include "dog/dog.h"
+
+
+class StageRunnerArg {
+	public:
+		~StageRunnerArg() {};
+};
 
 class StageRunner {
 	public:
@@ -31,9 +39,26 @@ class MainMenuStageRunner : public StageRunner {
 		void begin();
 		void run();
 		void end();
+
+		Menu* menu;
 };
 
 
+class ViewDogStageRunnerArg : public StageRunnerArg {
+	public: 
+		Dog* dog;
+};
+
+
+class ViewDogStageRunner : public StageRunner {
+	public:
+		ViewDogStageRunner(Game* game, ViewDogStageRunnerArg *arg);
+		~ViewDogStageRunner();
+		void begin();
+		void run();
+		void end();
+		ViewDogStageRunnerArg *arg;
+};
 
 
 
