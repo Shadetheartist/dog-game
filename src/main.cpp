@@ -7,6 +7,8 @@ Game game;
 void setup(void)
 {
 	Serial.begin(115200);
+
+	
 	game.init();
 }
 

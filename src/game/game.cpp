@@ -1,6 +1,8 @@
 #include "game/game.h"
 #include "game/stageRunner.h"
 #include "dog/dog.h"
+#include "dog/dogGraphics.h"
+#include "SPIFFS.h"
 
 Game::Game()
 {
@@ -17,6 +19,11 @@ void Game::init()
 {
 	Serial.println("init Game");
 
+	if(!SPIFFS.begin(true)){
+    Serial.println("An Error has occurred while mounting SPIFFS");
+    return;
+  }
+
 	display->init();
 	state = Running;
 	previousStage = None;
@@ -31,11 +38,13 @@ void Game::run()
 {
 	switch (state)
 	{
-	case GameState::Paused:
-		break;
+		case GameState::Paused:
+			break;
 
-	case GameState::Running:
-		stageRunner->run();
+		case GameState::Running:
+		if(stageRunner != NULL){
+			stageRunner->run();
+		}
 		break;
 	}
 }
