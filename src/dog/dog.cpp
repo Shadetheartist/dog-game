@@ -7,13 +7,10 @@ extern "C" {
   #include "bootloader_random.h"
 }
 
-
-
 Dog::~Dog() 
 {
   delete attributes;
 }
-
 
 static std::string generateRandomName(){
   uint8_t r = esp_random() % 4;

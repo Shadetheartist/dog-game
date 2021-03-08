@@ -1084,6 +1084,10 @@ upng_error upng_decode(upng_t* upng)
 
 	/* allocate space to store inflated (but still filtered) data */
 	inflated_size = ((upng->width * (upng->height * upng_get_bpp(upng) + 7)) / 8) + upng->height;
+
+	Serial.print("Infl Size: ");Serial.println(inflated_size);
+	Serial.print("Heap Remaining: ");Serial.println(heap_caps_get_largest_free_block(MALLOC_CAP_8BIT));
+
 	inflated = (unsigned char*)malloc(inflated_size);
 	if (inflated == NULL) {
 		free(compressed);
@@ -1196,8 +1200,11 @@ upng_t* upng_new_from_file(const char *filename)
 	/* get filesize */
 	size = file.size(); //file.position();
 
+	Serial.print("Size: ");Serial.println(size);
+	Serial.print("Heap Remaining: ");Serial.println(heap_caps_get_largest_free_block(MALLOC_CAP_8BIT));
 	/* read contents of the file into the vector */
 	buffer = (char *)malloc((unsigned long)size);
+
 	if (buffer == NULL) {
 		file.close();
 		SET_ERROR(upng, UPNG_ENOMEM);

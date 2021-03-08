@@ -31,7 +31,7 @@ void Game::init()
 	ViewDogStageRunnerArg *arg = new ViewDogStageRunnerArg();
 	arg->dog = Dog::createDog();
 
-	changeStage(ViewDog, arg);
+	changeStage(SplashScreen, arg);
 }
 
 void Game::run()

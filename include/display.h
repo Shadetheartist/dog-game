@@ -2,7 +2,6 @@
 #define DISPLAY_H
 
 #include <TFT_eSPI.h>
-#include "graphics.h"
 
 #define SCREEN_WIDTH 240
 #define SCREEN_HEIGHT 135
