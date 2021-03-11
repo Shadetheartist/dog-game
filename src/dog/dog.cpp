@@ -59,9 +59,7 @@ void Dog::renderToSprite(TFT_eSprite *sprite)
   sprite->drawString(name.c_str(), 0, 0, 2);
 
   sprite->invertDisplay(false);
-  uint16_t buffer[FRAME_HEIGHT * FRAME_WIDTH] = {0};
-  DogGraphics::getGraphic(BodyType_Fluffer, buffer);
-
-  sprite->pushImage(0, 0, FRAME_WIDTH, FRAME_HEIGHT, buffer);
+  uint16_t* buffer = DogGraphics::getGraphic(BodyType_Fluffer);
+  sprite->pushImage(0, 0, FRAME_WIDTH, FRAME_HEIGHT*2, buffer);
 }
 

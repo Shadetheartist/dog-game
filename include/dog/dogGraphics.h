@@ -4,13 +4,13 @@
 #include "dog/dog.h"
 
 #define NUM_DOG_TYPES 2
-#define FRAME_WIDTH 54
+#define FRAME_WIDTH 56
 #define FRAME_HEIGHT 40
 
 class DogGraphics
 {
 	public:
-	static void getGraphic(BodyType type, uint16_t buffer[]);
+	static uint16_t* getGraphic(BodyType type);
 	//static void getTailGraphic(TailType type, uint16_t buffer[]);
 	//static void getHeadGraphic(HeadType type, uint16_t buffer[]);
 	//static void getSnoutGraphic(SnoutType type, uint16_t buffer[]);

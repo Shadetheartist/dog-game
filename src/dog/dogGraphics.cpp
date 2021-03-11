@@ -1,14 +1,16 @@
 #include "dog/dogGraphics.h"
-#include "SPIFFS.h"
 #include "SD.h"
+#include "bmp.h"
 
-void DogGraphics::getGraphic(BodyType type, uint16_t buffer[]) 
+uint16_t* DogGraphics::getGraphic(BodyType type) 
 {
-  File file = SPIFFS.open("/bodies.bmp", FILE_READ);
-  if(!file){
-    Serial.println("Failed to open file for reading");
-    return;
+  BMP* bmp = bmp_new_from_file("/bodies.bmp");  
+  
+  uint16_t *buffer = bmp_convert_palette_to_image(bmp);
+
+  if(bmp != NULL){
+    bmp_free(bmp);
   }
 
-
+  return buffer;
 }
