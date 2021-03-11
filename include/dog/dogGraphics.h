@@ -10,8 +10,6 @@
 class DogGraphics
 {
 	public:
-	static void upngDecodeTask(void*);
-	static void decodePNGData(uint16_t **outputBuffer, const char* path);
 	static void getBodyGraphic(BodyType type, uint16_t buffer[]);
 	static void getTailGraphic(TailType type, uint16_t buffer[]);
 	static void getHeadGraphic(HeadType type, uint16_t buffer[]);
