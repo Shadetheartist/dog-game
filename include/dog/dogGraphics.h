@@ -4,8 +4,8 @@
 #include "dog/dog.h"
 
 #define NUM_DOG_TYPES 2
-#define FRAME_WIDTH 56
-#define FRAME_HEIGHT 40
+#define DOG_SPRITE_WIDTH 56
+#define DOG_SPRITE_HEIGHT 40
 
 class DogGraphics
 {

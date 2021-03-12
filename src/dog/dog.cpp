@@ -57,9 +57,10 @@ void Dog::renderToSprite(TFT_eSprite *sprite)
 	sprite->setCursor(1, 1, 1);
 	sprite->setTextColor(TFT_BLACK);
   sprite->drawString(name.c_str(), 0, 0, 2);
-
-  sprite->invertDisplay(false);
+	sprite->setSwapBytes(true);
+  sprite->invertDisplay(true);
+  
   uint16_t* buffer = DogGraphics::getGraphic(BodyType_Fluffer);
-  sprite->pushImage(0, 0, FRAME_WIDTH, FRAME_HEIGHT*2, buffer);
+  sprite->pushImage(0, 0, DOG_SPRITE_WIDTH, DOG_SPRITE_HEIGHT, buffer, 16);
 }
 

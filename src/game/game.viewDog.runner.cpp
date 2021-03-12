@@ -28,7 +28,6 @@ void ViewDogStageRunner::begin()
 	game->display->tft->fillScreen(TFT_LIGHTGREY);
 	sprite = new TFT_eSprite(game->display->tft);
 	sprite->createSprite(110, 110);
-
 	arg->dog->renderToSprite(sprite);
 	sprite->pushSprite(SCREEN_WIDTH/2-60, SCREEN_HEIGHT/2-40);
 
