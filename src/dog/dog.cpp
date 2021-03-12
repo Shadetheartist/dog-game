@@ -53,7 +53,6 @@ Dog *Dog::createDog(uint32_t seed)
 
 void Dog::renderToSprite(TFT_eSprite *sprite) 
 {
-  sprite->fillSprite(TFT_WHITE);
 	sprite->setCursor(1, 1, 1);
 	sprite->setTextColor(TFT_BLACK);
   sprite->drawString(name.c_str(), 0, 0, 2);
